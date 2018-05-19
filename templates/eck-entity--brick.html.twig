@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * Brickex template override Bicks default teamplte for custom wrapper display.
+ * https://github.com/iknowlex/brickex
+ *
+ * @see bricks/teamplte/eck-entity--brick.html.twig
+ * 
+ */
+#}
+
+{% if entity['#brickex_wrapper'] is defined %}
+{% set _wrapex = entity['#brickex_wrapper']|split('~') %}
+{% endif %}
+
+{% if _wrapex[0] is defined %} {{ _wrapex[0]|raw }}{% endif %}
+
+<div {{ attributes }}>
+{{ entity }}
+</div>
+
+{% if _wrapex[1] is defined %} {{ _wrapex[1]|raw }} {% endif %}

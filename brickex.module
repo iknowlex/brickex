@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Contains main module functions for brickex.
+ *
+ * More info: https://github.com/iknowlex/brickex.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Prepares variables for theme_inline_entity_form_entity_table().
+ */
+function brickex_preprocess_inline_entity_form_entity_table(&$variables) {
+  _inline_entity_form_preprocess_inline_entity_form_entity_table($variables);
+
+  if (!empty($variables['table']['#tabledrag'])) {
+    _bricks_preprocess_tabledrag_form($variables, 'form', 'brickex_tree_inline', 'ief-entity-delta', TRUE);
+  }
+}
+
+/* BRICKS FORMATTING ALTER FOR BRICKEX*/
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function brickex_theme_registry_alter(&$theme_registry) {
+  $theme_registry['eck_entity__brick']['path'] = drupal_get_path('module', 'brickex') . '/templates';
+}
+
+/**
+ * Prepares variables for `field.html.twig`.
+ * HACK - Copy reference from Brick moudle need custom work to be done.
+ */
+function brickex_preprocess_field(&$variables) {
+  $element = $variables['element'];
+
+  if ($element['#formatter'] == 'bricks_nested') {
+
+    foreach ($variables['items'] as $delta => $item) {
+      if (!empty($element['#items'][$delta]->options['wrapperex'])) {
+        // Check for $variables['items'][$delta]['content']['#brick'] ?
+        $variables['items'][$delta]['content']['#brickex_wrapper'] = $element['#items'][$delta]->options['wrapperex'];
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_help().
+ */
+function brickex_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.brickex':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Extend Drupal Bricks which provides option to add wrapper to brick and more.') . '</p>';
+      return $output;
+  }
+}

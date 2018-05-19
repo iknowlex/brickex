@@ -1,0 +1,8 @@
+name: BrickEx
+type: module
+description: Provides a extension to Brick mpodule to allow custom setting of wrapper and other features.
+# core: 8.x
+dependencies:
+  - drupal:bricks
+  - drupal:bricks_inline
+core: 8.x
