@@ -1,5 +1,6 @@
 # brickex
 Extend Drupal Bricks which provides option to add wrapper to brick and more.
+ - Allows to add custom wrapper to brick item
 
 ## Requirements
 
